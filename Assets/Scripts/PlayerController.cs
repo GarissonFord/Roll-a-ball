@@ -1,22 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour 
 {
 	public float speed;
 	private Rigidbody rb;
+	private int count;
+
+	public Text countText;
+	public Text winText;
 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody> ();
-	}
-
-	//Before rendering a frame
-	//Where most game code will go 
-	void Update()
-	{
-
+		count = 0;
+		SetCountText ();
+		winText.text = "";
 	}
 
 	//Called before performing any physics calculations
@@ -36,6 +37,17 @@ public class PlayerController : MonoBehaviour
 		if (other.gameObject.CompareTag ("Pick Up")) 
 		{
 			other.gameObject.SetActive (false);
+			count++;
+			SetCountText ();
+		}
+	}
+
+	void SetCountText()
+	{
+		countText.text = "Count: " + count.ToString();
+		if (count >= 11) 
+		{
+			winText.text = "You Win!";
 		}
 	}
 }
